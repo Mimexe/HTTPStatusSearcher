@@ -1,0 +1,27 @@
+{
+  "name": "httpstatussearcher",
+  "description": "Search a HTTP Status Code and description",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Mimexe/httpstatussearcher",
+  "author": "Mime (https://github.com/Mimexe)",
+  "repository": "Mimexe/httpstatussearcher",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "pnpm build && node dist/index.js",
+    "build": "pnpm clean && tsc",
+    "clean": "rimraf dist"
+  },
+  "bin": {
+    "hcode": "./dist/index.js"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "consola": "^3.2.3",
+    "enquirer": "^2.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "rimraf": "^5.0.1"
+  }
+}
