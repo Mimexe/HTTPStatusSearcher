@@ -6,7 +6,7 @@ import logger from "consola";
 
 const validate: (input: string, message?: boolean) => boolean | string = (
   input,
-  message = false
+  message = false,
 ) => {
   if (input == "*") return true;
 
@@ -65,7 +65,7 @@ const main = async () => {
       logger.info("Results:");
       for (const code of results) {
         logger.info(
-          `${code} ${codes[code].message} - ${codes[code].description}`
+          `${code} ${codes[code].message} - ${codes[code].description}`,
         );
       }
       process.stdout.write("Press enter to exit...");
@@ -82,7 +82,7 @@ const main = async () => {
       logger.info("All status codes:");
       for (const code in codes) {
         logger.info(
-          `${code} ${codes[code].message} - ${codes[code].description}`
+          `${code} ${codes[code].message} - ${codes[code].description}`,
         );
       }
       process.stdout.write("Press enter to exit...");
@@ -128,7 +128,7 @@ const main = async () => {
         logger.info("All status codes:");
         for (const code in codes) {
           logger.info(
-            `${code} ${codes[code].message} - ${codes[code].description}`
+            `${code} ${codes[code].message} - ${codes[code].description}`,
           );
         }
         main();
