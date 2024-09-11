@@ -16,7 +16,11 @@
     "hcode": "./dist/index.js"
   },
   "dependencies": {
+<<<<<<< HEAD
     "axios": "^1.7.7",
+=======
+    "axios": "^1.7.4",
+>>>>>>> cf759c38f5c38991341959ea6e5219cb99c3622b
     "consola": "^3.2.3",
     "enquirer": "^2.4.1"
   },
