@@ -16,17 +16,13 @@
     "hcode": "./dist/index.js"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "axios": "^1.7.7",
-=======
-    "axios": "^1.7.4",
->>>>>>> cf759c38f5c38991341959ea6e5219cb99c3622b
+    "axios": "^1.7.9",
     "consola": "^3.2.3",
     "enquirer": "^2.4.1"
   },
   "devDependencies": {
-    "@types/node": "^22.5.4",
+    "@types/node": "^22.10.2",
     "rimraf": "^6.0.1",
-    "typescript": "^5.6.2"
+    "typescript": "^5.7.2"
   }
 }
