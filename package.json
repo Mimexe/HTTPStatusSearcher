@@ -10,7 +10,8 @@
   "scripts": {
     "start": "pnpm build && node dist/index.js",
     "build": "pnpm clean && tsc",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "prepublish": "pnpm build"
   },
   "bin": {
     "hcode": "./dist/index.js"
@@ -24,5 +25,12 @@
     "@types/node": "^22.10.2",
     "rimraf": "^6.0.1",
     "typescript": "^5.7.2"
-  }
+  },
+  "files": [
+    "dist/index.js",
+    "README.md",
+    "package.json",
+    "package-lock.json",
+    "LICENSE"
+  ]
 }
