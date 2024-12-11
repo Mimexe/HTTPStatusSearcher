@@ -77,6 +77,8 @@ const main = async () => {
       )
     ) {
       await downloadJson();
+      process.stdout.write("Press enter to exit...");
+      process.stdin.once("data", () => process.exit(0));
       return;
     }
     if (validate(process.argv[2]) !== true) {
