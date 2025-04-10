@@ -13,7 +13,7 @@ importers:
         version: 1.8.2
       consola:
         specifier: ^3.2.3
-        version: 3.2.3
+        version: 3.4.2
       enquirer:
         specifier: ^2.4.1
         version: 2.4.1
@@ -88,8 +88,8 @@ packages:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
 
-  consola@3.2.3:
-    resolution: {integrity: sha512-I5qxpzLv+sJhTVEoLYNcTW+bThDCPsit0vLNKShZx6rLtpilNpmmeTPaeqJb9ZE9dV3DGaeby6Vuhrw38WjeyQ==}
+  consola@3.4.2:
+    resolution: {integrity: sha512-5IKcdX0nnYavi6G7TtOhwkYzyjfJlatbjMjuLSfE2kYT5pMDOilZ4OvMhi637CcDICTmz3wARPoyhqyX1Y+XvA==}
     engines: {node: ^14.18.0 || >=16.10.0}
 
   cross-spawn@7.0.6:
@@ -346,7 +346,7 @@ snapshots:
     dependencies:
       delayed-stream: 1.0.0
 
-  consola@3.2.3: {}
+  consola@3.4.2: {}
 
   cross-spawn@7.0.6:
     dependencies:
