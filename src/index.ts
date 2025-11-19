@@ -10,7 +10,7 @@ const validate: (input: string, message?: boolean) => boolean | string = (
 ) => {
   if (input == "*") return true;
 
-  if (input.endsWith("xx") && !isNaN(parseInt(input.at(0) || "XX")))
+  if (input.endsWith("xx") && !isNaN(parseInt(input[0] || "XX")))
     return true;
 
   if (isNaN(parseInt(input)))
