@@ -1,7 +1,7 @@
 {
   "name": "httpstatussearcher",
   "description": "Search a HTTP Status Code and description",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/Mimexe/httpstatussearcher",
   "author": "Mime (https://github.com/Mimexe)",
   "repository": "Mimexe/httpstatussearcher",
