@@ -3,48 +3,14 @@ import fs from "fs";
 import logger from "consola";
 // @ts-ignore
 import enquirer from "enquirer";
+import {
+  formatStatusLine,
+  isCodesOutdated,
+  parseCodesFile,
+  searchStatusCodes,
+  validateStatusInput,
+} from "./core.js";
 const { prompt } = enquirer;
-
-type StatusCode = {
-  code: number;
-  message: string;
-  description: string;
-};
-
-type ParsedCodes = {
-  downloadOn?: string;
-  codes: Record<string, StatusCode>;
-};
-
-const validate: (input: string, message?: boolean) => boolean | string = (
-  input,
-  message = false,
-) => {
-  if (input == "*") return true;
-
-  if (input.endsWith("xx") && !isNaN(parseInt(input[0] || "XX"))) return true;
-
-  if (isNaN(parseInt(input)))
-    return message ? "Please enter a valid number" : false;
-
-  if (parseInt(input) < 100 || parseInt(input) > 599)
-    return message ? "Please enter a valid status code" : false;
-
-  return true;
-};
-
-const parseCodesFile = (): ParsedCodes => {
-  const raw = JSON.parse(fs.readFileSync("./codes.json", "utf-8")) as Record<
-    string,
-    unknown
-  >;
-  const { downloadOn, ...rest } = raw;
-
-  return {
-    downloadOn: typeof downloadOn === "string" ? downloadOn : undefined,
-    codes: rest as Record<string, StatusCode>,
-  };
-};
 
 const downloadJson = async (silent: boolean = false) => {
   if (!silent) logger.info("Downloading json file...");
@@ -63,20 +29,10 @@ const main = async () => {
 
   let { downloadOn, codes } = parseCodesFile();
 
-  if (!downloadOn) {
+  if (isCodesOutdated(downloadOn)) {
     logger.warn("The json file is outdated, redownloading...");
     await downloadJson(false);
     ({ downloadOn, codes } = parseCodesFile());
-  } else {
-    const downloadedDate: Date = new Date(downloadOn);
-    const now: Date = new Date();
-    const diff: number = now.getTime() - downloadedDate.getTime();
-    const diffDays: number = diff / (1000 * 3600 * 24);
-    if (diffDays > 30) {
-      logger.warn("The json file is outdated, redownloading...");
-      await downloadJson(false);
-      ({ downloadOn, codes } = parseCodesFile());
-    }
   }
 
   logger.info("HTTP Status Codes provided by status.js.org");
@@ -91,16 +47,7 @@ const main = async () => {
         return;
       }
 
-      const results = Object.keys(codes).filter((code) => {
-        return (
-          codes[code].code
-            .toString()
-            .toLowerCase()
-            .includes(search.toLowerCase()) ||
-          codes[code].message.toLowerCase().includes(search.toLowerCase()) ||
-          codes[code].description.toLowerCase().includes(search.toLowerCase())
-        );
-      });
+      const results = searchStatusCodes(codes, search);
 
       if (results.length == 0) {
         logger.error("No results found");
@@ -111,9 +58,7 @@ const main = async () => {
 
       logger.info("Results:");
       for (const code of results) {
-        logger.info(
-          `${code} ${codes[code].message} - ${codes[code].description}`,
-        );
+        logger.info(formatStatusLine(code, codes[code]));
       }
       process.stdout.write("Press enter to exit...");
       process.stdin.once("data", () => process.exit(0));
@@ -129,18 +74,16 @@ const main = async () => {
       return;
     }
 
-    if (validate(process.argv[2]) !== true) {
+    if (validateStatusInput(process.argv[2]) !== true) {
       logger.error("Invalid status code");
-      logger.error(validate(process.argv[2], true));
+      logger.error(validateStatusInput(process.argv[2], true));
       return;
     }
 
     if (process.argv[2] == "*") {
       logger.info("All status codes:");
       for (const code in codes) {
-        logger.info(
-          `${code} ${codes[code].message} - ${codes[code].description}`,
-        );
+        logger.info(formatStatusLine(code, codes[code]));
       }
       process.stdout.write("Press enter to exit...");
       process.stdin.once("data", () => process.exit(0));
@@ -180,16 +123,14 @@ const main = async () => {
         name: "code",
         message: "What code do you want to get?",
         validate: (input: string) => {
-          return validate(input, true);
+          return validateStatusInput(input, true);
         },
       })) as { code: string };
 
       if (code == "*") {
         logger.info("All status codes:");
         for (const key in codes) {
-          logger.info(
-            `${key} ${codes[key].message} - ${codes[key].description}`,
-          );
+          logger.info(formatStatusLine(key, codes[key]));
         }
         main();
         return;
